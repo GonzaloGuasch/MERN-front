@@ -1,24 +1,34 @@
-import logo from './logo.svg';
+import {Fragment, useState, useEffect} from 'react';
+import Draggable from 'react-draggable';
+import Navbar from './Navbar.js';
+import axios from 'axios';
 import './App.css';
 
-function App() {
+function App(props) {
+  const [movie, setMovie] = useState({})
+  const [votes, setVotes] = useState(0)
+
+  useEffect(() => {
+    axios.get('https://api.themoviedb.org/3/movie/426426?api_key=b364c5199fdbafb18d6cad1cff37bcbb')
+    .then(res => setMovie(res.data))
+    .catch(e => console.log(e))
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <Navbar history={props.history}/>
+    <Draggable>
+     <div>
+        <div>{movie.original_title}</div>
+        <img src={"https://image.tmdb.org/t/p/w200/" + movie.poster_path} alt = ""/>
+        <div>
+          {votes}
+          <button onClick={() => setVotes(votes => votes + 1)}>+</button>
+          <button onClick={()=> votes > 0 ? setVotes(votes => votes - 1): null}>-</button>
+        </div>
+      </div>
+      </Draggable>
+      </Fragment>
   );
 }
 
