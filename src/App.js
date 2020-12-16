@@ -1,35 +1,54 @@
 import {Fragment, useState, useEffect} from 'react';
-import Draggable from 'react-draggable';
 import Navbar from './Navbar.js';
 import axios from 'axios';
 import './App.css';
 
 function App(props) {
-  const [movie, setMovie] = useState({})
-  const [votes, setVotes] = useState(0)
+  const [movies, setMovies] = useState([])
+
 
   useEffect(() => {
-    axios.get('https://api.themoviedb.org/3/movie/426426?api_key=b364c5199fdbafb18d6cad1cff37bcbb')
-    .then(res => setMovie(res.data))
+    axios.get('http://localhost:8888/pelis/')
+    .then(res => setMovies(res.data))
     .catch(e => console.log(e))
   }, [])
+
+  const movies_to_show = movies.map((aMovie, i) => <Movie data={aMovie} key={i} />)
 
   return (
     <Fragment>
       <Navbar history={props.history}/>
-    <Draggable>
-     <div>
-        <div>{movie.original_title}</div>
-        <img src={"https://image.tmdb.org/t/p/w200/" + movie.poster_path} alt = ""/>
-        <div>
-          {votes}
-          <button onClick={() => setVotes(votes => votes + 1)}>+</button>
-          <button onClick={()=> votes > 0 ? setVotes(votes => votes - 1): null}>-</button>
-        </div>
-      </div>
-      </Draggable>
+        {movies_to_show}
       </Fragment>
   );
 }
 
 export default App;
+
+
+function Movie(props) {
+    const [votes, setVotes] = useState(props.data.votes)
+
+    function send_votes(){
+        axios({
+            method: 'POST',
+            url: 'http://localhost:8888/vote',
+            data: {
+                title: props.data.title,
+                votes: votes
+            }
+        }).then(res => console.log(res.data)).catch(e => console.log(e))
+    }
+    return(
+        <div>
+            <div>{props.data.title}</div>
+            <img src={""} alt = ""/>
+            <div>
+                {votes}
+                <button onClick={() =>votes < 11 ? setVotes(votes => votes + 1): null}>+</button>
+                <button onClick={()=> votes > 0 ? setVotes(votes => votes - 1): null}>-</button>
+                <button onClick={()=> send_votes()}>send votes</button>
+            </div>
+        </div>
+    )
+}
