@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 
-function AddPeli(props) {
+function AddPeli() {
     const [new_movie_id, set_new_movie_id] = useState('');
-    const [movie_name, set_movie_name] = useState('');
 
     function save_movie(movie_info){
         axios({
@@ -37,7 +36,6 @@ function AddPeli(props) {
                     onChange={(e) => set_new_movie_id(e.target.value)}/>
             <button onClick={() => addMovie()}>Add</button>
             <button onClick={() => set_new_movie_id(new_movie_id => '')}>cancel</button>
-            <div>{movie_name}</div>
         </div>
     );
 }
