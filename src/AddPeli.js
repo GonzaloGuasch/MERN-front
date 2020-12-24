@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import './AddPeli.css';
 
-function AddPeli() {
+function AddPeli(props) {
     const [new_movie_id, set_new_movie_id] = useState('');
 
     function save_movie(movie_info){
@@ -28,14 +29,16 @@ function AddPeli() {
     }
 
     return(
-        <div>
+        <div className={"add-movie-container"}>
             <input  type="text"
                     placeholder={"Movie id"}
                     value={new_movie_id}
                     onKeyDown={handleEnter}
                     onChange={(e) => set_new_movie_id(e.target.value)}/>
-            <button onClick={() => addMovie()}>Add</button>
-            <button onClick={() => set_new_movie_id(new_movie_id => '')}>cancel</button>
+            <div className={"suma-resta-container"}>
+                <button onClick={() => addMovie()}>Add</button>
+                <button onClick={() => props.history.goBack()}>cancel</button>
+            </div>
         </div>
     );
 }

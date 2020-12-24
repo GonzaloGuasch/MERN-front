@@ -1,0 +1,8 @@
+.add-movie-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url("./fondo.png");
+    height: 100%;
+    width: 100%;
+}

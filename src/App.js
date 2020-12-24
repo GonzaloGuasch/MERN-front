@@ -1,4 +1,4 @@
-import {Fragment, useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import Navbar from './Navbar.js';
 import axios from 'axios';
 import './App.css';
@@ -16,10 +16,12 @@ function App(props) {
   const movies_to_show = movies.map((aMovie, i) => <Movie data={aMovie} key={i} />)
 
   return (
-    <Fragment>
+    <div className={"app-container"}>
       <Navbar history={props.history}/>
+        <div className={"movie-poster-container"}>
         {movies_to_show}
-      </Fragment>
+        </div>
+      </div>
   );
 }
 
@@ -41,14 +43,20 @@ function Movie(props) {
     }
     return(
         <div>
-            <div>{props.data.title}</div>
-            <img src={""} alt = ""/>
-            <div>
-                {votes}
-                <button onClick={() =>votes < 11 ? setVotes(votes => votes + 1): null}>+</button>
-                <button onClick={()=> votes > 0 ? setVotes(votes => votes - 1): null}>-</button>
-                <button onClick={()=> send_votes()}>send votes</button>
-            </div>
+            <img src={"https://image.tmdb.org/t/p/w200/" + props.data.poster_path} alt = ""/>
+            <div className={"movie-title-votes"}>
+                <div>{props.data.title}</div>
+                <div>
+                    {votes}
+                        <br/>
+                        <div className={"suma-resta-container"}>
+                            <button className={"add-button"} onClick={() =>votes < 11 ? setVotes(votes => votes + 1): null}>+</button>
+                            <button className={"subtraction-button"} onClick={()=> votes > 0 ? setVotes(votes => votes - 1): null}>-</button>
+                        </div>
+                            <button className={"send-votes-button"}
+                                    onClick={()=> send_votes()}>send votes</button>
+                    </div>
+                </div>
         </div>
     )
 }
