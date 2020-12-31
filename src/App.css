@@ -25,10 +25,6 @@
     justify-content: center;
 }
 
-.send-votes-button {
-
-}
-
 .add-button {
     border-radius: 10px;
     background-color: #e35d71;
@@ -45,4 +41,11 @@
     border: none;
     height: 35%;
     width: 20%;
+}
+
+@media only screen and (max-width: 600px) {
+
+    .movie-poster-container {
+        justify-content: center;
+    }
 }

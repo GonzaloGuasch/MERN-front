@@ -31,13 +31,16 @@ function AddPeli(props) {
     return(
         <div className={"add-movie-container"}>
             <input  type="text"
+                    className={"input-movie-id"}
                     placeholder={"Movie id"}
                     value={new_movie_id}
                     onKeyDown={handleEnter}
                     onChange={(e) => set_new_movie_id(e.target.value)}/>
             <div className={"suma-resta-container"}>
-                <button onClick={() => addMovie()}>Add</button>
-                <button onClick={() => props.history.goBack()}>cancel</button>
+                <button className={"add-movie-button"}
+                        onClick={() => addMovie()}>Add</button>
+                <button className={"cancel-button"}
+                        onClick={() => props.history.goBack()}>cancel</button>
             </div>
         </div>
     );
